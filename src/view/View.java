@@ -140,7 +140,7 @@ public class View extends JFrame{
         });
 
         deleteButton.addActionListener(e -> {
-            String id = idText.getText();''
+            String id = idText.getText();
         });
 
         frame.setVisible(true);
