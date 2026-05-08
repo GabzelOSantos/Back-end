@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class View extends JFrame{
     public void newFrame(){
+        AtomicInteger id = new AtomicInteger();
         Cadastro newUser = new Cadastro();
 
         JFrame frame = new JFrame("Login");
@@ -121,16 +122,16 @@ public class View extends JFrame{
         });
 
         createButton.addActionListener(e -> {
-            AtomicInteger id = new AtomicInteger();
-
             String email = emailCadastroText.getText();
             String password = passwordCadastroText.getText();
 
-            newUser.setId(id.getAndIncrement());
-            newUser.setEmail(email);
-            newUser.setPassword(password);
+            Cadastro newUserCreated = new Cadastro();
 
-            users.add(newUser);
+            newUserCreated.setId(id.getAndIncrement());
+            newUserCreated.setEmail(email);
+            newUserCreated.setPassword(password);
+
+            users.add(newUserCreated);
 
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
         });
@@ -140,7 +141,15 @@ public class View extends JFrame{
         });
 
         deleteButton.addActionListener(e -> {
-            String id = idText.getText();
+            int idRemove = Integer.parseInt(idText.getText());
+
+            boolean removed = users.removeIf(user -> user.getId() == idRemove);
+
+            if (removed){
+                JOptionPane.showMessageDialog(null, "Usuário "+idRemove+" deletado com sucesso!");
+            }else{
+                JOptionPane.showMessageDialog(null, "Falha: não foi possível deletar o usuário");
+            }
         });
 
         frame.setVisible(true);
